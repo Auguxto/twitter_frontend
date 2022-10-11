@@ -134,14 +134,101 @@ export const ButtonText = styled.span`
   color: #ffffff;
 `;
 
+export const Tweet = styled.div`
+  display: flex;
+  height: auto;
+
+  flex-direction: column;
+
+  background-color: #ffffff;
+
+  border-radius: 5px;
+
+  padding: 10px;
+`;
+
+export const Nick = styled.span`
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 18px;
+
+  color: #a3a3a3;
+`;
+
+export const Time = styled.span`
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 18px;
+
+  color: #a3a3a3;
+`;
+
+export const Text = styled.p`
+  font-family: "Ubuntu";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 21px;
+
+  color: #a4a2a2;
+
+  width: 90%;
+
+  margin-bottom: 30px;
+`;
+
 export const Explorer = styled.div`
   display: flex;
   width: 22%;
   min-width: 422px;
   height: 100vh;
 
+  margin-right: 40px;
   padding-top: 40px;
-  padding-left: 40px;
+`;
+
+export const Search = styled.div`
+  display: flex;
+
+  width: 100%;
+  height: 60px;
+
+  align-items: center;
+
+  padding-left: 20px;
+
+  background: #ffffff;
+  border-radius: 30px;
+
+  overflow: hidden;
+`;
+
+export const SearchInput = styled.input`
+  display: flex;
+  flex: 1;
+  height: 100%;
+
+  padding: 0 10px;
+
+  border: none;
+
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 18px;
+
+  color: #1da1f2;
+
+  ::placeholder {
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 18px;
+
+    color: #1da1f2;
+  }
 `;
 
 export const Logo = styled.img.attrs({
