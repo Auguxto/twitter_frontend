@@ -44,8 +44,6 @@ export const Inputs = styled.div`
   width: 100%;
 
   align-items: center;
-
-  margin-top: 50px;
 `;
 
 export const Input = styled.input`
