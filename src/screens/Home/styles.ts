@@ -12,6 +12,19 @@ export const Container = styled.div`
   background-color: #1da1f2;
 `;
 
+export const LoadingContainer = styled.div`
+  display: flex;
+  flex: 1;
+
+  width: 100%;
+  height: 100vh;
+
+  align-items: center;
+  justify-content: center;
+
+  background-color: #1da1f2;
+`;
+
 export const SideMenu = styled.div`
   display: flex;
   width: 20%;
@@ -64,7 +77,9 @@ export const Content = styled.div`
 
   gap: 40px;
 
-  padding: 40px;
+  padding: 40px 20px 40px 40px;
+
+  overflow-y: scroll;
 `;
 
 export const PostTweet = styled.div`
@@ -147,6 +162,32 @@ export const Tweet = styled.div`
   padding: 10px;
 `;
 
+export const TweetHeader = styled.div`
+  display: flex;
+  flex: 1;
+
+  flex-direction: row;
+
+  align-items: center;
+  justify-content: space-between;
+`;
+
+export const DeleteButton = styled.button`
+  width: 40px;
+  height: 40px;
+
+  align-items: center;
+  justify-content: center;
+
+  margin-right: 10px;
+
+  background: transparent;
+
+  border: none;
+
+  cursor: pointer;
+`;
+
 export const Nick = styled.span`
   font-style: normal;
   font-weight: 400;
@@ -198,6 +239,7 @@ export const Search = styled.div`
   align-items: center;
 
   padding-left: 20px;
+  margin-left: 20px;
 
   background: #ffffff;
   border-radius: 30px;
