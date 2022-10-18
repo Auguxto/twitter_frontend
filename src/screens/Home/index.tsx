@@ -57,14 +57,15 @@ const Home = () => {
   };
 
   const handleFollowUser = async (target_id: string) => {
-    console.log(access_token);
-    const response = await api.post(`/user/follow/${target_id}`, {
-      headers: {
-        authorization: `Bearer ${access_token}`,
-      },
-    });
-
-    console.log(response);
+    const response = await api.post(
+      `/user/follow/${target_id}`,
+      {},
+      {
+        headers: {
+          authorization: `Bearer ${access_token}`,
+        },
+      }
+    );
 
     if (response.status === 201) {
       getUserInfo();
@@ -148,7 +149,7 @@ const Home = () => {
                           handleFollowUser(post.user_id);
                         }}
                       >
-                        <S.FollowText>Seguir</S.FollowText>
+                        <S.FollowText>Follow</S.FollowText>
                       </S.FollowButton>
                     )}
                   </S.User>
