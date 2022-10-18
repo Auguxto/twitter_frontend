@@ -3,16 +3,7 @@ import { useNavigate } from "react-router-dom";
 
 import api from "../lib/api";
 
-type User = {
-  id: string;
-  name: string;
-  username: string;
-  email: string;
-  bio: string | null;
-  avatar: string | null;
-  created_at: string;
-  updated_at: string;
-};
+import { User } from "../types/twitter";
 
 type RegisterT = {
   name: string;
@@ -29,6 +20,7 @@ type LoginT = {
 type UserContextT = {
   register: (props: RegisterT) => void;
   login: (props: LoginT) => void;
+  getUserInfo: () => void;
   access_token: string | undefined;
   user: User | undefined;
 };
@@ -65,12 +57,11 @@ const UserProvider: React.FC<UserProviderT> = ({ children }) => {
 
       const user_response = await api.get("/user", {
         headers: {
-          authorization: `Bearer ${access_token}`,
+          authorization: `Bearer ${access_response.data.access_token}`,
         },
       });
 
       if (user_response.status === 200) {
-        console.log(user_response.data);
         setUser(user_response.data);
       }
 
@@ -78,8 +69,22 @@ const UserProvider: React.FC<UserProviderT> = ({ children }) => {
     }
   };
 
+  const getUserInfo = async () => {
+    const user_response = await api.get("/user", {
+      headers: {
+        authorization: `Bearer ${access_token}`,
+      },
+    });
+
+    if (user_response.status === 200) {
+      setUser(user_response.data);
+    }
+  };
+
   return (
-    <UserContext.Provider value={{ register, login, access_token, user }}>
+    <UserContext.Provider
+      value={{ register, login, getUserInfo, access_token, user }}
+    >
       {children}
     </UserContext.Provider>
   );

@@ -206,6 +206,28 @@ export const Time = styled.span`
   color: #a3a3a3;
 `;
 
+export const FollowButton = styled.span`
+  align-items: center;
+  justify-content: center;
+
+  background: transparent;
+
+  border: none;
+
+  cursor: pointer;
+`;
+
+export const FollowText = styled.span`
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 18px;
+
+  text-decoration: underline;
+
+  color: #1da1f2;
+`;
+
 export const Text = styled.p`
   font-family: "Ubuntu";
   font-style: normal;

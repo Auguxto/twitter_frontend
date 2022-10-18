@@ -21,7 +21,7 @@ const Home = () => {
   const [posts, setPosts] = React.useState<Post[]>([]);
   const [text, setText] = React.useState("");
 
-  const { user, access_token } = React.useContext(UserContext);
+  const { user, access_token, getUserInfo } = React.useContext(UserContext);
 
   const handleTweet = async () => {
     if (!text) return;
@@ -56,16 +56,28 @@ const Home = () => {
     }
   };
 
+  const handleFollowUser = async (target_id: string) => {
+    console.log(access_token);
+    const response = await api.post(`/user/follow/${target_id}`, {
+      headers: {
+        authorization: `Bearer ${access_token}`,
+      },
+    });
+
+    console.log(response);
+
+    if (response.status === 201) {
+      getUserInfo();
+    }
+  };
+
   const now = moment();
 
   React.useEffect(() => {
     if (!user) {
-      setInterval(() => {
-        navigate("/account/login");
-      }, 3000);
-    } else {
-      setLoading(false);
+      navigate("/account/login");
     }
+    setLoading(false);
   }, []);
 
   React.useEffect(() => {
@@ -116,6 +128,12 @@ const Home = () => {
             </S.Button>
           </S.PostTweet>
           {posts.map((post) => {
+            const user_follow_post_author = user?.following.find(
+              (follow) => follow.following_id === post.user_id
+            );
+
+            const show_follow_button =
+              !user_follow_post_author && post.user_id !== user?.id;
             return (
               <S.Tweet key={post.id}>
                 <S.TweetHeader>
@@ -124,6 +142,15 @@ const Home = () => {
                     <S.Username>{post.user.name}</S.Username>
                     <S.Nick>@{post.user.username}</S.Nick>
                     <S.Time>{now.diff(post.created_at, "minutes")}m</S.Time>
+                    {show_follow_button && (
+                      <S.FollowButton
+                        onClick={() => {
+                          handleFollowUser(post.user_id);
+                        }}
+                      >
+                        <S.FollowText>Seguir</S.FollowText>
+                      </S.FollowButton>
+                    )}
                   </S.User>
                   {post.user_id === user?.id && (
                     <S.DeleteButton
