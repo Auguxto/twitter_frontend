@@ -72,6 +72,18 @@ const Home = () => {
     }
   };
 
+  const handleUnfollowUser = async (target_id: string) => {
+    const response = await api.delete(`/user/follow/${target_id}`, {
+      headers: {
+        authorization: `Bearer ${access_token}`,
+      },
+    });
+
+    if (response.status === 200) {
+      getUserInfo();
+    }
+  };
+
   const now = moment();
 
   React.useEffect(() => {
@@ -129,12 +141,27 @@ const Home = () => {
             </S.Button>
           </S.PostTweet>
           {posts.map((post) => {
-            const user_follow_post_author = user?.following.find(
-              (follow) => follow.following_id === post.user_id
-            );
+            const user_follow_post_author =
+              user?.following.find(
+                (follow) => follow.following_id === post.user_id
+              ) && post.user_id !== user?.id;
 
-            const show_follow_button =
-              !user_follow_post_author && post.user_id !== user?.id;
+            const show_follow_button = post.user_id !== user?.id;
+
+            const post_time_minutes = now.diff(post.created_at, "minutes");
+            const post_time_hours = now.diff(post.created_at, "hours");
+            const post_time_days = now.diff(post.created_at, "days");
+            const post_time_weeks = now.diff(post.created_at, "weeks");
+
+            const post_time =
+              post_time_minutes >= 60
+                ? post_time_hours >= 24
+                  ? post_time_days >= 31
+                    ? `${post_time_weeks}w`
+                    : `${post_time_days}d`
+                  : `${post_time_hours}h`
+                : `${post_time_minutes}m`;
+
             return (
               <S.Tweet key={post.id}>
                 <S.TweetHeader>
@@ -142,14 +169,20 @@ const Home = () => {
                     <S.Avatar />
                     <S.Username>{post.user.name}</S.Username>
                     <S.Nick>@{post.user.username}</S.Nick>
-                    <S.Time>{now.diff(post.created_at, "minutes")}m</S.Time>
+                    <S.Time>{post_time}</S.Time>
                     {show_follow_button && (
                       <S.FollowButton
                         onClick={() => {
-                          handleFollowUser(post.user_id);
+                          if (user_follow_post_author) {
+                            handleUnfollowUser(post.user_id);
+                          } else {
+                            handleFollowUser(post.user_id);
+                          }
                         }}
                       >
-                        <S.FollowText>Follow</S.FollowText>
+                        <S.FollowText>
+                          {user_follow_post_author ? "Unfollow" : "Follow"}
+                        </S.FollowText>
                       </S.FollowButton>
                     )}
                   </S.User>
