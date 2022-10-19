@@ -48,6 +48,10 @@ const Home = () => {
             <S.Avatar />
             <S.Username>{user?.username}</S.Username>
           </S.User>
+          <S.Follows>
+            <S.FollowText>{user?.following.length} Following</S.FollowText>
+            <S.FollowText>{user?.followedBy.length} Follower</S.FollowText>
+          </S.Follows>
         </S.SideMenu>
         <S.Content>
           <PostTweet />
