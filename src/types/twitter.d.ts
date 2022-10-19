@@ -21,7 +21,7 @@ export type User = {
   updated_at: string;
 };
 
-export type Post = {
+export type Tweet = {
   id: string;
   user_id: string;
   text: string;
